@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const blogData = JSON.parse(stringifyBlogData);
       const user = blogData.user;
       setAuth(user);
-    } else {
+    } else {  
       setAuth(null);  
     }
   }, [navigate, location]);

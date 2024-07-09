@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../utils/axiosInstance";
 import moment from "moment";
+import { Modal, Button } from "react-bootstrap";
+
 const CategoryList = () => {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState([]);
@@ -10,6 +12,8 @@ const CategoryList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,12 +73,42 @@ const CategoryList = () => {
       const input = e.target.value;
       setSearchValue(input);
       const response = await axios
-        .get(`/category/getCategories?page=${currentPage}&q=${input}`)
+        // .get(`/category/getCategories?page=${currentPage}&q=${input}`)
+        .get(`/category/getCategories?q=${input}`)
         .then((res) => res.data);
 
       setCategory(response.data.categories);
       setTotalPage(response.data.pages);
     } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message, {
+          autoClose: true,
+        });
+      } else {
+        toast.error("SomeThing went wrong ", {
+          autoClose: true,
+        });
+      }
+    }
+  };
+  const handleDelete = async () => {
+    try {
+      const result = await axios
+        .delete(`/category/deleteCategory/${categoryId}`)
+        .then((res) => res.data);
+
+      toast.success(result.message, {
+        autoClose: true,
+      });
+      const response = await axios
+        .get(`/category/getCategories?page=${currentPage}&q=${searchValue}`)
+        .then((res) => res.data);
+
+      setCategory(response.data.categories);
+      setTotalPage(response.data.pages);
+      setShowModal(false);
+    } catch (error) {
+      setShowModal(false);
       if (error.response) {
         toast.error(error.response.data.message, {
           autoClose: true,
@@ -99,7 +133,7 @@ const CategoryList = () => {
         className="saerch-input"
         type="text"
         name="search"
-        placeholder="Search here"
+        placeholder="Search  here"
         onChange={handleSearch}
       />
       {loading ? (
@@ -129,11 +163,19 @@ const CategoryList = () => {
                 <th>
                   <button
                     className="button"
-                    onClick={() => navigate("update-category/")}
+                    onClick={() => navigate(`update-category/${category._id}`)}
                   >
                     Update
                   </button>
-                  <button className="button">Delete</button>
+                  <button
+                    className="button"
+                    onClick={() => {
+                      setCategoryId(category._id);
+                      setShowModal(true);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </th>
               </tr>
             ))}
@@ -170,6 +212,33 @@ const CategoryList = () => {
           </button>
         </div>
       )}
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setCategoryId(null);
+          setShowModal(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Are You sure you want to delete?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <div style={{ margin: "0 auto" }}>
+            <Button
+              className="no-button"
+              onClick={() => {
+                setCategoryId(null);
+                setShowModal(false);
+              }}
+            >
+              No
+            </Button>{" "}
+            <Button className="yes-button" onClick={handleDelete}>
+              Yes
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
