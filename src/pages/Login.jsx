@@ -2,7 +2,7 @@ import axios from "../utils/axiosInstance";
 import { toast } from "react-toastify";
 import loginValidator from "../validators/loginValidator";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 const initialFormData = {
   email: "",
   password: "",
@@ -105,6 +105,8 @@ const Login = () => {
           />
           {formError.password && <p className="error">{formError.password}</p>}
         </div>
+
+        <Link className="forgot-password" to="/forgot-password">Forgot Password</Link>
 
         <div className="form-group">
           <input

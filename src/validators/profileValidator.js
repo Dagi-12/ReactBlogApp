@@ -2,23 +2,21 @@ const isEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(String(email).toLowerCase());
 };
-const loginValidator = ({ email, password }) => {
+const profileValidators = ({ name, email }) => {
   const errors = {
+    name: "",
     email: "",
-    password: "",
   };
 
+  if (!name) {
+    errors.name = "Name is required";
+  }
   if (!email) {
     errors.email = "Email is required";
   } else if (!isEmail(email)) {
     errors.email = "Invalid Email";
   }
 
-  if (!password) {
-    errors.password = "password is Required";
-  }
-
   return errors;
 };
-export default loginValidator;
-
+export default profileValidators;

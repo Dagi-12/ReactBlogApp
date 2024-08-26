@@ -11,6 +11,7 @@ const initialFormData = {
 const initialFormError = {
   title: "",
 };
+
 const UpdateCategory = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState(initialFormError);
