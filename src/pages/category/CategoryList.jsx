@@ -168,7 +168,7 @@ const CategoryList = () => {
                     Update
                   </button>
                   <button
-                    className="button"
+                    className="delete-button"
                     onClick={() => {
                       setCategoryId(category._id);
                       setShowModal(true);

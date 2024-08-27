@@ -5,6 +5,9 @@ import placeImg from "../../assets/images/place.jpeg";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { Modal, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 const DetailPost = () => {
   const [post, setPost] = useState({});
   const [mimeType, setMimeType] = useState("");
@@ -79,7 +82,7 @@ const DetailPost = () => {
   return (
     <div>
       <button className="button button-block" onClick={() => navigate(-1)}>
-        Go Back
+        <FontAwesomeIcon icon={faArrowLeft} /> Go Back
       </button>
       <button
         className="button button-block"
@@ -87,13 +90,13 @@ const DetailPost = () => {
           navigate(`/posts/update-post/${postId}`);
         }}
       >
-        Update Post
+        <FontAwesomeIcon icon={faPen} /> Update Post
       </button>
       <button
-        className="button button-block"
+        className="delete-button button-block "
         onClick={() => setShowModal(true)}
       >
-        Delete Post
+     <FontAwesomeIcon icon={faTrash} />   Delete Post
       </button>
       <div className="detail-container">
         <h2 className="post-title">{post?.title}</h2>
@@ -105,7 +108,6 @@ const DetailPost = () => {
           UpdatedAt: {moment(post?.updatedAt).format("YYYY-MM-DD HH:mm:ss")}
         </h5>
         <p className="post-desc">{post?.desc}</p>
-        {/* <img src={placeImg} alt="mern" /> */}
         <img src={`data:${mimeType};base64,${base64String}`} alt=" Image" />
       </div>
       <Modal

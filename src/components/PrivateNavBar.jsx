@@ -22,7 +22,7 @@ const PrivateNavBar = () => {
       <NavLink to="/profile">Profile</NavLink>
       <NavLink to="/setting">Setting</NavLink>
       <NavLink to="/login" onClick={handleLogout}>
-        {" "}
+        
         Logout
       </NavLink>
     </nav>

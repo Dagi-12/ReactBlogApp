@@ -88,8 +88,7 @@ const Home = () => {
     }
   };
   return (
-    <div>
- 
+    <div> 
       <h2 className="table-title">PostList</h2>
       <input
         className="saerch-input"
