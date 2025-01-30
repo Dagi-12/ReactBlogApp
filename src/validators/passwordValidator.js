@@ -4,11 +4,7 @@ const changePasswordValidator = ({ oldPassword, newPassword }) => {
     newPassword:"",
   };
 
-  //   if (!newPassword) {
-  //     errors.newPassword = "newPassword is Required";
-  //   } else if (newPassword.length < 6) {
-  //     errors.newPassword = "Password must be 6 characters long ";
-  //   }
+  
   if (!newPassword) {
     errors.newPassword = "New password is required";
   } else if (newPassword.length < 6) {

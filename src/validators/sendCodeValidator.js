@@ -9,9 +9,7 @@ const sendCodeValidator = (email) => {
   if (!email) {
     errors.email = "Email is required";
   }
-//    else if (!isEmail(email)) {
-//     errors.email = "Invalid Email";
-//   }
+
 
   return errors;
 };
